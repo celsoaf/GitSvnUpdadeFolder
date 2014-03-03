@@ -163,16 +163,19 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Updated.jpg" />
+    <EmbeddedResource Include="Resources\updating.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\updating.jpg" />
+    <EmbeddedResource Include="Resources\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\outdated.jpg" />
+    <EmbeddedResource Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\error.jpg" />
+    <EmbeddedResource Include="Resources\outdated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Updated.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

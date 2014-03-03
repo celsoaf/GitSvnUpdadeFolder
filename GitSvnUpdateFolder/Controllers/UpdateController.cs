@@ -146,7 +146,7 @@ namespace GitSvnUpdateFolder.Controllers
             p.WaitForExit();
 
             if (p.ExitCode == 0)
-                folder.State = Enums.FolderState.Updated;
+                folder.State = folder.Output.Any() ? Enums.FolderState.Info : Enums.FolderState.Updated;
             else
                 folder.State = Enums.FolderState.Error;
         }

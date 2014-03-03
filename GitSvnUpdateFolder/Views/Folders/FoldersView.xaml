@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <my:ImageConverter x:Key="ImageConverter1" />
     </UserControl.Resources>
-    <GroupBox Header="Folders">
+    <GroupBox Header="Folders" Margin="5">
         <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

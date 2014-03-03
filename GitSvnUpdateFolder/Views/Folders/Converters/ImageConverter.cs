@@ -27,6 +27,8 @@ namespace GitSvnUpdateFolder.Views.Folders.Converters
                         return ImageUtils.ConvertBitmapToBitmapSource(Properties.Resources.outdated);
                     case FolderState.Error:
                         return ImageUtils.ConvertBitmapToBitmapSource(Properties.Resources.error);
+                    case FolderState.Info:
+                        return ImageUtils.ConvertBitmapToBitmapSource(Properties.Resources.info);
                     default:
                         break;
                 }
