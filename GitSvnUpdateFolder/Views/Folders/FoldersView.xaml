@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="GitSvnUpdateFolder.Views.Folders.FoldersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" xmlns:my="clr-namespace:GitSvnUpdateFolder.Views.Folders.Converters">
+    <UserControl.Resources>
+        <my:ImageConverter x:Key="ImageConverter1" />
+    </UserControl.Resources>
+    <GroupBox Header="Folders">
+        <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding State, Converter={StaticResource ImageConverter1}}" 
+                               Width="16" Height="16" Margin="3"/>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </GroupBox>
+</UserControl>
