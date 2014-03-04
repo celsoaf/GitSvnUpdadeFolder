@@ -13,6 +13,7 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
     public class FolderSelectorViewModel : NotificationObject, IFolderSelectorViewModel
     {
         private IEventAggregator _eventAggregator;
+        private bool _running = false;
 
         public FolderSelectorViewModel(IFolderSelectorView view, IEventAggregator eventAggregator)
         {
@@ -28,6 +29,23 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
                 {
                     FolderPath = dialog.SelectedPath;
                 }
+            }, ()=> !_running);
+
+            UpdateAllCommand = new DelegateCommand(
+                ()=> _eventAggregator.GetEvent<UpdateAllEvent>().Publish(null),
+                ()=> !_running);
+
+            _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj =>
+                {
+                    _running = true;
+                    SelectCommand.RaiseCanExecuteChanged();
+                    UpdateAllCommand.RaiseCanExecuteChanged();
+                });
+            _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj =>
+            {
+                _running = false;
+                SelectCommand.RaiseCanExecuteChanged();
+                UpdateAllCommand.RaiseCanExecuteChanged();
             });
         }
 
@@ -48,6 +66,7 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
             }
         }
 
-        public ICommand SelectCommand { get; set; }
+        public DelegateCommand SelectCommand { get; set; }
+        public DelegateCommand UpdateAllCommand { get; set; }
     }
 }

@@ -53,25 +53,36 @@ namespace GitSvnUpdateFolder.Controllers
                 RegionNames.RightRegion,
                 () => _output.View);
 
-            _eventAggregator.GetEvent<FolderSelectedEvent>().Subscribe(FolderSelected);
-            _eventAggregator.GetEvent<FolderItemSelectedEvent>().Subscribe(FolderItemSelected);
+            InitializeEvents();
 
             _folderSelector.FolderPath = DEFAULT_FOLDER;
         }
 
-        private void FolderItemSelected(FolderModel model)
+        private void InitializeEvents()
         {
-            if (model != null)
-                _output.Output = model.Output;
-            else
-                _output.Output = null;
+            _eventAggregator.GetEvent<FolderSelectedEvent>().Subscribe(FolderSelected);
+            _eventAggregator.GetEvent<UpdateFolderEvent>().Subscribe(f =>
+            {
+                _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
+
+                Task.Factory.StartNew(() =>
+                {
+                    Update(f);
+
+                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+                });
+            });
+            _eventAggregator.GetEvent<UpdateAllEvent>().Subscribe(obj =>
+            {
+                StartUpdate();
+            });
         }
 
         private void FolderSelected(string path)
         {
             _folder.Folders.Clear();
 
-            foreach (var folder in Directory.GetDirectories(path))
+            foreach (var folder in Directory.GetDirectories(path).OrderBy(s => s))
             {
                 _folder.Folders.Add(new Models.FolderModel
                 {
@@ -80,20 +91,28 @@ namespace GitSvnUpdateFolder.Controllers
                     State = Enums.FolderState.Outdated
                 });
             }
-
-            StartUpdate();
         }
 
         private void StartUpdate()
         {
+            _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
+            _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(0);
+
             Task.Factory.StartNew(() =>
                 {
                     var list = _folder.Folders.ToList();
 
+                    var total = list.Count;
+                    var i = 0d;
                     foreach (var item in list)
                     {
                         Update(item);
+
+                        var progress = (++i / total) * 100;
+                        _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
                     }
+
+                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
                 });
         }
 
