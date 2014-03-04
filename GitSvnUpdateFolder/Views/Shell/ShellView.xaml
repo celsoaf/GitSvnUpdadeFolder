@@ -26,8 +26,17 @@
         <ContentControl Grid.Row="2" Grid.Column="0" 
                                 cal:RegionManager.RegionName="{x:Static local:RegionNames.LeftRegion}"/>
         <GridSplitter ResizeDirection="Columns" Grid.Row="2" Width="4" />
-        <ContentControl Grid.Row="2" Grid.Column="1" 
-                                cal:RegionManager.RegionName="{x:Static local:RegionNames.RightRegion}"/>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <ContentControl Grid.Row="0"
+                                cal:RegionManager.RegionName="{x:Static local:RegionNames.RightTopRegion}"/>
+            <ContentControl Grid.Row="1"
+                                cal:RegionManager.RegionName="{x:Static local:RegionNames.RightBottomRegion}"/>
+        </Grid>        
 
         <ContentControl Grid.Row="3" Grid.ColumnSpan="2" 
                                 cal:RegionManager.RegionName="{x:Static local:RegionNames.BottomRegion}"/>

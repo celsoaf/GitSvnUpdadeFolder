@@ -16,10 +16,10 @@ namespace GitSvnUpdateFolder.Models
         {
             Name = new DirectoryInfo(path).Name;
             FullPath = path;
-            State = FolderState.Outdated;
+            State = FolderState.Initializing;
 
             Output = new ObservableCollection<string>();
-            Batchs = new ObservableCollection<string>();
+            Batches = new ObservableCollection<string>();
 
             Task.Factory.StartNew(() =>
                 {
@@ -27,8 +27,11 @@ namespace GitSvnUpdateFolder.Models
 
                     App.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            Batchs.Clear();
-                            batchs.ForEach(f => Batchs.Add(f));
+                            Batches.Clear();
+                            batchs.ForEach(f => Batches.Add(f));
+
+                            if (State == FolderState.Initializing)
+                                State = FolderState.Outdated;
                         }));
                 });
         }
@@ -50,6 +53,6 @@ namespace GitSvnUpdateFolder.Models
         }
 
         public ObservableCollection<string> Output { get; private set; }
-        public ObservableCollection<string> Batchs { get; private set; }
+        public ObservableCollection<string> Batches { get; private set; }
     }
 }

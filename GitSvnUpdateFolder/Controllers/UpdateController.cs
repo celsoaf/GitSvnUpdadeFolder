@@ -14,6 +14,7 @@ using System.Diagnostics;
 using GitSvnUpdateFolder.Models;
 using GitSvnUpdateFolder.Views.Output;
 using GitSvnUpdateFolder.Views.Progress;
+using GitSvnUpdateFolder.Views.Batches;
 
 namespace GitSvnUpdateFolder.Controllers
 {
@@ -51,12 +52,16 @@ namespace GitSvnUpdateFolder.Controllers
                () => _folderSelector.View);
 
             _regionManager.RegisterViewWithRegion(
-                RegionNames.RightRegion,
+                RegionNames.RightBottomRegion,
                 () => _output.View);
 
             _regionManager.RegisterViewWithRegion(
                 RegionNames.Top2Region,
                 () => _container.Resolve<IProgressViewModel>().View);
+
+            _regionManager.RegisterViewWithRegion(
+                RegionNames.RightTopRegion,
+                () => _container.Resolve<IBatchesViewModel>().View);
 
             InitializeEvents();
 

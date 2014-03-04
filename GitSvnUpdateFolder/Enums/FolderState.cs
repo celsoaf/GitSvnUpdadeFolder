@@ -11,6 +11,7 @@ namespace GitSvnUpdateFolder.Enums
         Updating,
         Outdated,
         Error,
-        Info
+        Info,
+        Initializing
     }
 }

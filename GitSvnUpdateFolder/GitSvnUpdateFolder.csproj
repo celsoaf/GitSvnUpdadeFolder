@@ -96,6 +96,12 @@
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ImageUtils.cs" />
+    <Compile Include="Views\Batches\BatchesView.xaml.cs">
+      <DependentUpon>BatchesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Batches\BatchesViewModel.cs" />
+    <Compile Include="Views\Batches\IBatchesView.cs" />
+    <Compile Include="Views\Batches\IBatchesViewModel.cs" />
     <Compile Include="Views\FolderSelector\FolderSelectorView.xaml.cs">
       <DependentUpon>FolderSelectorView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +137,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Batches\BatchesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FolderSelector\FolderSelectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Updated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\initializing.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
