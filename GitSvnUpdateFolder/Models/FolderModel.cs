@@ -5,18 +5,36 @@ using System.Text;
 using GitSvnUpdateFolder.Enums;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace GitSvnUpdateFolder.Models
 {
     public class FolderModel : NotificationObject
     {
-        public FolderModel()
+        public FolderModel(string path)
         {
+            Name = new DirectoryInfo(path).Name;
+            FullPath = path;
+            State = FolderState.Outdated;
+
             Output = new ObservableCollection<string>();
+            Batchs = new ObservableCollection<string>();
+
+            Task.Factory.StartNew(() =>
+                {
+                    var batchs = Directory.GetFiles(path, "*.bat", SearchOption.AllDirectories).ToList();
+
+                    App.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            Batchs.Clear();
+                            batchs.ForEach(f => Batchs.Add(f));
+                        }));
+                });
         }
 
-        public string Name { get; set; }
-        public string FullPath { get; set; }
+        public string Name { get; private set; }
+        public string FullPath { get; private set; }
         private FolderState _State;
         public FolderState State
         {
@@ -31,6 +49,7 @@ namespace GitSvnUpdateFolder.Models
             }
         }
 
-        public ObservableCollection<string> Output { get; set; }
+        public ObservableCollection<string> Output { get; private set; }
+        public ObservableCollection<string> Batchs { get; private set; }
     }
 }

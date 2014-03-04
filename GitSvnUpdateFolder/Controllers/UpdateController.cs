@@ -85,17 +85,24 @@ namespace GitSvnUpdateFolder.Controllers
 
         private void FolderSelected(string path)
         {
+            _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
+
             _folder.Folders.Clear();
 
-            foreach (var folder in Directory.GetDirectories(path).OrderBy(s => s))
-            {
-                _folder.Folders.Add(new Models.FolderModel
+            Task.Factory.StartNew(() =>
                 {
-                    Name = new DirectoryInfo(folder).Name,
-                    FullPath = folder,
-                    State = Enums.FolderState.Outdated
+                    foreach (var folder in Directory.GetDirectories(path).OrderBy(s => s))
+                    {
+                        var fm = new Models.FolderModel(folder);
+
+                        App.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            _folder.Folders.Add(fm);
+                        }));
+                    }
+
+                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
                 });
-            }
         }
 
         private void StartUpdate()
