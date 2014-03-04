@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GitSvnUpdateFolder.Models;
 using System.Collections.ObjectModel;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GitSvnUpdateFolder.Views.Folders
 {
@@ -13,5 +14,6 @@ namespace GitSvnUpdateFolder.Views.Folders
 
         ObservableCollection<FolderModel> Folders { get; set; }
         FolderModel SelectedFolder { get; set; }
+        DelegateCommand<FolderModel> UpdateCommand { get; set; }
     }
 }

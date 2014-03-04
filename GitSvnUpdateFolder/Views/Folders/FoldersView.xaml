@@ -12,11 +12,22 @@
         <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding State, Converter={StaticResource ImageConverter1}}" 
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Update" Margin="5"
+                                Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                CommandParameter="{Binding}"
+                                FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Bold"
+                                   VerticalAlignment="Center"/>
+                        <Image Grid.Column="2" VerticalAlignment="Center"
+                            Source="{Binding State, Converter={StaticResource ImageConverter1}}" 
                                Width="16" Height="16" Margin="3"/>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                    </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
