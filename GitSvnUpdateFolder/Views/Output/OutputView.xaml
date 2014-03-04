@@ -1,13 +1,21 @@
-﻿<UserControl x:Class="GitSvnUpdateFolder.Views.Output.OutputView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Converters="clr-namespace:GitSvnUpdateFolder.Views.Output.Converters" x:Class="GitSvnUpdateFolder.Views.Output.OutputView" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Converters:ColorConverter x:Key="ColorConverter"/>
+    </UserControl.Resources>
     <GroupBox Header="Output" Margin="5">
         <ListBox ItemsSource="{Binding Output}">
-            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Message}" Foreground="{Binding Type, Converter={StaticResource ColorConverter}}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </GroupBox>
 </UserControl>

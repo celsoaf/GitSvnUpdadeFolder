@@ -6,6 +6,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Events;
 using GitSvnUpdateFolder.Events;
+using GitSvnUpdateFolder.Models;
 
 namespace GitSvnUpdateFolder.Views.Output
 {
@@ -24,8 +25,8 @@ namespace GitSvnUpdateFolder.Views.Output
 
         public IOutputView View { get; set; }
 
-        private ObservableCollection<string> _Output;
-        public ObservableCollection<string> Output
+        private ObservableCollection<MessageModel> _Output;
+        public ObservableCollection<MessageModel> Output
         {
             get
             {

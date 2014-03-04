@@ -155,7 +155,7 @@ namespace GitSvnUpdateFolder.Controllers
                 {
                     App.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        folder.Output.Add(e.Data);
+                        folder.Output.Add(new MessageModel { Message = e.Data, Type = Enums.MessageType.Info });
                     }));
                 }
             };
@@ -166,7 +166,7 @@ namespace GitSvnUpdateFolder.Controllers
                 {
                     App.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        folder.Output.Add(e.Data);
+                        folder.Output.Add(new MessageModel { Message = e.Data, Type = Enums.MessageType.Error });
                     }));
                 }
             };

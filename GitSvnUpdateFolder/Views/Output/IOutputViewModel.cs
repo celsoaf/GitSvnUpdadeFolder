@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using GitSvnUpdateFolder.Models;
 
 namespace GitSvnUpdateFolder.Views.Output
 {
@@ -10,6 +11,6 @@ namespace GitSvnUpdateFolder.Views.Output
     {
         IOutputView View { get; set; }
 
-        ObservableCollection<string> Output { get; set; }
+        ObservableCollection<MessageModel> Output { get; set; }
     }
 }

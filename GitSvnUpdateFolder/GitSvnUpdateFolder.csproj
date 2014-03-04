@@ -86,6 +86,7 @@
     <Compile Include="Controllers\IUpdateController.cs" />
     <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Enums\FolderState.cs" />
+    <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Events\FolderItemSelectedEvent.cs" />
     <Compile Include="Events\FolderSelectedEvent.cs" />
     <Compile Include="Events\ProcessEndEvent.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Events\UpdateAllEvent.cs" />
     <Compile Include="Events\UpdateFolderEvent.cs" />
     <Compile Include="Models\FolderModel.cs" />
+    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ImageUtils.cs" />
     <Compile Include="Views\Batches\BatchesView.xaml.cs">
@@ -115,6 +117,7 @@
     <Compile Include="Views\Folders\FoldersViewModel.cs" />
     <Compile Include="Views\Folders\IFoldersView.cs" />
     <Compile Include="Views\Folders\IFoldersViewModel.cs" />
+    <Compile Include="Views\Output\Converters\ColorConverter.cs" />
     <Compile Include="Views\Output\IOutputView.cs" />
     <Compile Include="Views\Output\IOutputViewModel.cs" />
     <Compile Include="Views\Output\OutputView.xaml.cs">

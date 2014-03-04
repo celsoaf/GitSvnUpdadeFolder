@@ -18,7 +18,7 @@ namespace GitSvnUpdateFolder.Models
             FullPath = path;
             State = FolderState.Initializing;
 
-            Output = new ObservableCollection<string>();
+            Output = new ObservableCollection<MessageModel>();
             Batches = new ObservableCollection<string>();
 
             Task.Factory.StartNew(() =>
@@ -52,7 +52,7 @@ namespace GitSvnUpdateFolder.Models
             }
         }
 
-        public ObservableCollection<string> Output { get; private set; }
+        public ObservableCollection<MessageModel> Output { get; private set; }
         public ObservableCollection<string> Batches { get; private set; }
     }
 }
