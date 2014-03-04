@@ -88,6 +88,11 @@
     <Compile Include="Enums\FolderState.cs" />
     <Compile Include="Events\FolderItemSelectedEvent.cs" />
     <Compile Include="Events\FolderSelectedEvent.cs" />
+    <Compile Include="Events\ProcessEndEvent.cs" />
+    <Compile Include="Events\ProcessProgressEvent.cs" />
+    <Compile Include="Events\ProcessStartEvent.cs" />
+    <Compile Include="Events\UpdateAllEvent.cs" />
+    <Compile Include="Events\UpdateFolderEvent.cs" />
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ImageUtils.cs" />
