@@ -10,6 +10,7 @@ using GitSvnUpdateFolder.Views.Folders;
 using GitSvnUpdateFolder.Controllers;
 using GitSvnUpdateFolder.Views.FolderSelector;
 using GitSvnUpdateFolder.Views.Output;
+using GitSvnUpdateFolder.Views.Progress;
 
 namespace GitSvnUpdateFolder
 {
@@ -51,6 +52,9 @@ namespace GitSvnUpdateFolder
 
             Container.RegisterType<IOutputView, OutputView>();
             Container.RegisterType<IOutputViewModel, OutputViewModel>();
+
+            Container.RegisterType<IProgressView, ProgressView>();
+            Container.RegisterType<IProgressViewModel, ProgressViewModel>();
         }
 
         protected override void InitializeModules()

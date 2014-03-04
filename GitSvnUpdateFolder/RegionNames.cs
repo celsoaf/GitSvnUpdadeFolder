@@ -7,7 +7,8 @@ namespace GitSvnUpdateFolder
 {
     public static class RegionNames
     {
-        public const string TopRegion = "TopRegion";
+        public const string Top1Region = "Top1Region";
+        public const string Top2Region = "Top2Region";
         public const string LeftRegion = "LeftRegion";
         public const string RightRegion = "RightRegion";
         public const string BottomRegion = "BottomRegion";

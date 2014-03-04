@@ -115,6 +115,12 @@
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Output\OutputViewModel.cs" />
+    <Compile Include="Views\Progress\IProgressView.cs" />
+    <Compile Include="Views\Progress\IProgressViewModel.cs" />
+    <Compile Include="Views\Progress\ProgressView.xaml.cs">
+      <DependentUpon>ProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Progress\ProgressViewModel.cs" />
     <Compile Include="Views\Shell\IShellView.cs" />
     <Compile Include="Views\Shell\IShellViewModel.cs" />
     <Compile Include="Views\Shell\ShellView.xaml.cs">
@@ -134,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Output\OutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Progress\ProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
