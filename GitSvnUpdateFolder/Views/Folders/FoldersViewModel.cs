@@ -36,6 +36,10 @@ namespace GitSvnUpdateFolder.Views.Folders
                 f => _eventAggregator.GetEvent<CommitFolderEvent>().Publish(f),
                 f => !_running);
 
+            GitExtensionsCommand = new DelegateCommand<FolderModel>(
+               f => _eventAggregator.GetEvent<GitExtentionsEvent>().Publish(f),
+               f => !_running);
+
             _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj => UpdateCommands(true));
             _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj => UpdateCommands(false));
         }
@@ -46,12 +50,14 @@ namespace GitSvnUpdateFolder.Views.Folders
             FetchCommand.RaiseCanExecuteChanged();
             RebaseCommand.RaiseCanExecuteChanged();
             CommitCommand.RaiseCanExecuteChanged();
+            GitExtensionsCommand.RaiseCanExecuteChanged();
         }
 
         public IFoldersView View { get; set; }
         public DelegateCommand<FolderModel> FetchCommand { get; set; }
         public DelegateCommand<FolderModel> RebaseCommand { get; set; }
         public DelegateCommand<FolderModel> CommitCommand { get; set; }
+        public DelegateCommand<FolderModel> GitExtensionsCommand { get; set; }
 
         public ObservableCollection<FolderModel> Folders { get; set; }
         private FolderModel _SelectedFolder;

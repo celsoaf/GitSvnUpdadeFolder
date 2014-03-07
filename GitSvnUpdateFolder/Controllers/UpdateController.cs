@@ -116,6 +116,12 @@ namespace GitSvnUpdateFolder.Controllers
             {
                 RunAll(CommitFolder);
             });
+
+
+            _eventAggregator.GetEvent<GitExtentionsEvent>().Subscribe(f =>
+            {
+                RunGitExtensions(f);
+            });
         }
 
         private void FolderSelected(string path)
@@ -182,6 +188,22 @@ namespace GitSvnUpdateFolder.Controllers
             RunGit(folder, "svn dcommit");
         }
 
+        private void RunGitExtensions(FolderModel folder)
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(
+                @"C:\Program Files (x86)\GitExtensions\GitExtensions.exe", 
+                "browse " + folder.FullPath)
+            {
+                UseShellExecute = false,
+                //RedirectStandardOutput = true,
+                //RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            p.Start();
+        }
+
         private static void RunGit(FolderModel folder, string arguments)
         {
             folder.State = Enums.FolderState.Updating;
@@ -230,10 +252,12 @@ namespace GitSvnUpdateFolder.Controllers
 
             p.WaitForExit();
 
-            if (p.ExitCode == 0)
-                folder.State = folder.Output.Any() ? Enums.FolderState.Info : Enums.FolderState.Updated;
-            else
+            if (p.ExitCode != 0 || folder.Output.Any(m => m.Type == Enums.MessageType.Error))
                 folder.State = Enums.FolderState.Error;
+            else if (folder.Output.Any())
+                folder.State = Enums.FolderState.Info;
+            else
+                folder.State = Enums.FolderState.Updated;
         }
     }
 }

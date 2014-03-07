@@ -17,5 +17,6 @@ namespace GitSvnUpdateFolder.Views.Folders
         DelegateCommand<FolderModel> FetchCommand { get; set; }
         DelegateCommand<FolderModel> RebaseCommand { get; set; }
         DelegateCommand<FolderModel> CommitCommand { get; set; }
+        DelegateCommand<FolderModel> GitExtensionsCommand { get; set; }
     }
 }

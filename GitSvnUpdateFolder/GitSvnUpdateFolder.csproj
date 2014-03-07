@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\GitFolderIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
@@ -91,6 +94,7 @@
     <Compile Include="Events\CommitFolderEvent.cs" />
     <Compile Include="Events\FolderItemSelectedEvent.cs" />
     <Compile Include="Events\FolderSelectedEvent.cs" />
+    <Compile Include="Events\GitExtentionsEvent.cs" />
     <Compile Include="Events\ProcessEndEvent.cs" />
     <Compile Include="Events\ProcessProgressEvent.cs" />
     <Compile Include="Events\ProcessStartEvent.cs" />
@@ -238,6 +242,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\PushAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GitFolderIcon.ico" />
+    <Resource Include="Resources\GitFolderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\git-extensions.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

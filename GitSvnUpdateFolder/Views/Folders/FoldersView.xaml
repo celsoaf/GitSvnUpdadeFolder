@@ -19,6 +19,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
@@ -44,9 +45,16 @@
                             <Image Source="/GitSvnUpdateFolder;component/Resources/Push.png" 
                                        Height="16" Width="16"/>
                         </Button>
-                        <TextBlock Grid.Column="4" Text="{Binding Name}" FontWeight="Bold"
+                        <Button Grid.Column="4" Margin="2" ToolTip="Git Extensions"
+                                Command="{Binding Path=DataContext.GitExtensionsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                CommandParameter="{Binding}"
+                                FontSize="14" FontWeight="Bold">
+                            <Image Source="/GitSvnUpdateFolder;component/Resources/git-extensions.png" 
+                                       Height="16" Width="16"/>
+                        </Button>
+                        <TextBlock Grid.Column="5" Text="{Binding Name}" FontWeight="Bold"
                                    VerticalAlignment="Center"/>
-                        <Image Grid.Column="5" VerticalAlignment="Center"
+                        <Image Grid.Column="6" VerticalAlignment="Center"
                             Source="{Binding State, Converter={StaticResource ImageConverter1}}" 
                                Width="16" Height="16" Margin="3"/>
                     </Grid>
