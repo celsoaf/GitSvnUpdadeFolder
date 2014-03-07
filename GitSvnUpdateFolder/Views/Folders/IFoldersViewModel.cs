@@ -14,6 +14,8 @@ namespace GitSvnUpdateFolder.Views.Folders
 
         ObservableCollection<FolderModel> Folders { get; set; }
         FolderModel SelectedFolder { get; set; }
-        DelegateCommand<FolderModel> UpdateCommand { get; set; }
+        DelegateCommand<FolderModel> FetchCommand { get; set; }
+        DelegateCommand<FolderModel> RebaseCommand { get; set; }
+        DelegateCommand<FolderModel> CommitCommand { get; set; }
     }
 }

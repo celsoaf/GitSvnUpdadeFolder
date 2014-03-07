@@ -31,22 +31,29 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
                 }
             }, ()=> !_running);
 
-            UpdateAllCommand = new DelegateCommand(
-                ()=> _eventAggregator.GetEvent<UpdateAllEvent>().Publish(null),
-                ()=> !_running);
+            FetchAllCommand = new DelegateCommand(
+                () => _eventAggregator.GetEvent<FetchAllEvent>().Publish(null),
+                () => !_running);
 
-            _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj =>
-                {
-                    _running = true;
-                    SelectCommand.RaiseCanExecuteChanged();
-                    UpdateAllCommand.RaiseCanExecuteChanged();
-                });
-            _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj =>
-            {
-                _running = false;
-                SelectCommand.RaiseCanExecuteChanged();
-                UpdateAllCommand.RaiseCanExecuteChanged();
-            });
+            RebaseAllCommand = new DelegateCommand(
+                () => _eventAggregator.GetEvent<RebaseAllEvent>().Publish(null),
+                () => !_running);
+
+            CommitAllCommand = new DelegateCommand(
+                () => _eventAggregator.GetEvent<CommitAllEvent>().Publish(null),
+                () => !_running);
+
+            _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj => UpdateCommands(true));
+            _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj => UpdateCommands(false));
+        }
+
+        private void UpdateCommands(bool running)
+        {
+            _running = running;
+            SelectCommand.RaiseCanExecuteChanged();
+            FetchAllCommand.RaiseCanExecuteChanged();
+            RebaseAllCommand.RaiseCanExecuteChanged();
+            CommitAllCommand.RaiseCanExecuteChanged();
         }
 
         public IFolderSelectorView View { get; set; }
@@ -67,6 +74,8 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
         }
 
         public DelegateCommand SelectCommand { get; set; }
-        public DelegateCommand UpdateAllCommand { get; set; }
+        public DelegateCommand FetchAllCommand { get; set; }
+        public DelegateCommand RebaseAllCommand { get; set; }
+        public DelegateCommand CommitAllCommand { get; set; }
     }
 }

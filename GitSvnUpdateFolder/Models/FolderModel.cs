@@ -16,24 +16,26 @@ namespace GitSvnUpdateFolder.Models
         {
             Name = new DirectoryInfo(path).Name;
             FullPath = path;
-            State = FolderState.Initializing;
-
+            
             Output = new ObservableCollection<MessageModel>();
             Batches = new ObservableCollection<string>();
 
-            Task.Factory.StartNew(() =>
-                {
-                    var batchs = Directory.GetFiles(path, "*.bat", SearchOption.AllDirectories).ToList();
+            State = FolderState.Outdated;
 
-                    App.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            Batches.Clear();
-                            batchs.ForEach(f => Batches.Add(f));
+            //State = FolderState.Initializing;
+            //Task.Factory.StartNew(() =>
+            //    {
+            //        var batchs = Directory.GetFiles(path, "*.bat", SearchOption.AllDirectories).ToList();
 
-                            if (State == FolderState.Initializing)
-                                State = FolderState.Outdated;
-                        }));
-                });
+            //        App.Current.Dispatcher.Invoke(new Action(() =>
+            //            {
+            //                Batches.Clear();
+            //                batchs.ForEach(f => Batches.Add(f));
+
+            //                if (State == FolderState.Initializing)
+            //                    State = FolderState.Outdated;
+            //            }));
+            //    });
         }
 
         public string Name { get; private set; }

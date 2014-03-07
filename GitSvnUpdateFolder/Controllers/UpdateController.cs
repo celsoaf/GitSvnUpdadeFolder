@@ -71,20 +71,50 @@ namespace GitSvnUpdateFolder.Controllers
         private void InitializeEvents()
         {
             _eventAggregator.GetEvent<FolderSelectedEvent>().Subscribe(FolderSelected);
-            _eventAggregator.GetEvent<UpdateFolderEvent>().Subscribe(f =>
+            _eventAggregator.GetEvent<FetchFolderEvent>().Subscribe(f =>
             {
                 _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
 
                 Task.Factory.StartNew(() =>
                 {
-                    Update(f);
+                    FetchFolder(f);
 
                     _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
                 });
             });
-            _eventAggregator.GetEvent<UpdateAllEvent>().Subscribe(obj =>
+            _eventAggregator.GetEvent<RebaseFolderEvent>().Subscribe(f =>
             {
-                StartUpdate();
+                _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
+
+                Task.Factory.StartNew(() =>
+                {
+                    RebaseFolder(f);
+
+                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+                });
+            });
+            _eventAggregator.GetEvent<CommitFolderEvent>().Subscribe(f =>
+            {
+                _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
+
+                Task.Factory.StartNew(() =>
+                {
+                    CommitFolder(f);
+
+                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+                });
+            });
+            _eventAggregator.GetEvent<FetchAllEvent>().Subscribe(obj =>
+            {
+                RunAll(FetchFolder);
+            });
+            _eventAggregator.GetEvent<RebaseAllEvent>().Subscribe(obj =>
+            {
+                RunAll(RebaseFolder);
+            });
+            _eventAggregator.GetEvent<CommitAllEvent>().Subscribe(obj =>
+            {
+                RunAll(CommitFolder);
             });
         }
 
@@ -110,30 +140,49 @@ namespace GitSvnUpdateFolder.Controllers
                 });
         }
 
-        private void StartUpdate()
+        private void RunAll(Action<FolderModel> action)
         {
             _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
             _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(0);
 
             Task.Factory.StartNew(() =>
+            {
+                var list = _folder.Folders.ToList();
+
+                var total = list.Count;
+                var i = 0d;
+                foreach (var item in list)
                 {
-                    var list = _folder.Folders.ToList();
+                    action(item);
 
-                    var total = list.Count;
-                    var i = 0d;
-                    foreach (var item in list)
-                    {
-                        Update(item);
+                    var progress = (++i / total) * 100;
+                    _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
+                }
 
-                        var progress = (++i / total) * 100;
-                        _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
-                    }
-
-                    _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
-                });
+                _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+            });
         }
 
-        private void Update(FolderModel folder)
+        private void RebaseFolder(FolderModel folder)
+        {
+            //var gitCmd = new GitUI.GitUICommands(folder.FullPath);
+
+            //var currentBranch = gitCmd.GitCommand("rev-parse --abbrev-ref HEAD").Trim();
+
+            RunGit(folder, "svn rebase");
+        }
+
+        private void FetchFolder(FolderModel folder)
+        {
+            RunGit(folder, "svn fetch");
+        }
+
+        private void CommitFolder(FolderModel folder)
+        {
+            RunGit(folder, "svn dcommit");
+        }
+
+        private static void RunGit(FolderModel folder, string arguments)
         {
             folder.State = Enums.FolderState.Updating;
 
@@ -141,7 +190,7 @@ namespace GitSvnUpdateFolder.Controllers
             Directory.SetCurrentDirectory(folder.FullPath);
 
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo("git", "svn fetch")
+            p.StartInfo = new ProcessStartInfo("git", arguments)
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,

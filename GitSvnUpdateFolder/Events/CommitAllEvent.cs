@@ -6,7 +6,7 @@ using Microsoft.Practices.Prism.Events;
 
 namespace GitSvnUpdateFolder.Events
 {
-    public class UpdateFolderEvent : CompositePresentationEvent<Models.FolderModel>
+    public class CommitAllEvent : CompositePresentationEvent<object>
     {
     }
 }

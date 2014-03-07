@@ -24,24 +24,34 @@ namespace GitSvnUpdateFolder.Views.Folders
 
             Folders = new ObservableCollection<FolderModel>();
 
-            UpdateCommand = new DelegateCommand<FolderModel>(
-                f => _eventAggregator.GetEvent<UpdateFolderEvent>().Publish(f),
+            FetchCommand = new DelegateCommand<FolderModel>(
+                f => _eventAggregator.GetEvent<FetchFolderEvent>().Publish(f),
                 f => !_running);
 
-            _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj =>
-            {
-                _running = true;
-                UpdateCommand.RaiseCanExecuteChanged();
-            });
-            _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj =>
-            {
-                _running = false;
-                UpdateCommand.RaiseCanExecuteChanged();
-            });
+            RebaseCommand = new DelegateCommand<FolderModel>(
+                f => _eventAggregator.GetEvent<RebaseFolderEvent>().Publish(f),
+                f => !_running);
+
+            CommitCommand = new DelegateCommand<FolderModel>(
+                f => _eventAggregator.GetEvent<CommitFolderEvent>().Publish(f),
+                f => !_running);
+
+            _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj => UpdateCommands(true));
+            _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj => UpdateCommands(false));
+        }
+
+        private void UpdateCommands(bool running)
+        {
+            _running = running;
+            FetchCommand.RaiseCanExecuteChanged();
+            RebaseCommand.RaiseCanExecuteChanged();
+            CommitCommand.RaiseCanExecuteChanged();
         }
 
         public IFoldersView View { get; set; }
-        public DelegateCommand<FolderModel> UpdateCommand { get; set; }
+        public DelegateCommand<FolderModel> FetchCommand { get; set; }
+        public DelegateCommand<FolderModel> RebaseCommand { get; set; }
+        public DelegateCommand<FolderModel> CommitCommand { get; set; }
 
         public ObservableCollection<FolderModel> Folders { get; set; }
         private FolderModel _SelectedFolder;

@@ -87,15 +87,24 @@
     <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Enums\FolderState.cs" />
     <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Events\CommitAllEvent.cs" />
+    <Compile Include="Events\CommitFolderEvent.cs" />
     <Compile Include="Events\FolderItemSelectedEvent.cs" />
     <Compile Include="Events\FolderSelectedEvent.cs" />
     <Compile Include="Events\ProcessEndEvent.cs" />
     <Compile Include="Events\ProcessProgressEvent.cs" />
     <Compile Include="Events\ProcessStartEvent.cs" />
-    <Compile Include="Events\UpdateAllEvent.cs" />
-    <Compile Include="Events\UpdateFolderEvent.cs" />
+    <Compile Include="Events\RebaseAllEvent.cs" />
+    <Compile Include="Events\RebaseFolderEvent.cs" />
+    <Compile Include="Events\FetchAllEvent.cs" />
+    <Compile Include="Events\FetchFolderEvent.cs" />
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ImageUtils.cs" />
     <Compile Include="Views\Batches\BatchesView.xaml.cs">
@@ -169,11 +178,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -191,22 +195,49 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\updating.png" />
+    <EmbeddedResource Include="Resources\updating.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\error.png" />
+    <EmbeddedResource Include="Resources\error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\info.png" />
+    <EmbeddedResource Include="Resources\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\outdated.png" />
+    <EmbeddedResource Include="Resources\outdated.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Updated.png" />
+    <EmbeddedResource Include="Resources\Updated.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\initializing.png" />
+    <EmbeddedResource Include="Resources\initializing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PullRebase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Push.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PullAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PushAll.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
