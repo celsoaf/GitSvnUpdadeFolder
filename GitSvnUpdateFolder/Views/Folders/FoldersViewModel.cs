@@ -25,20 +25,35 @@ namespace GitSvnUpdateFolder.Views.Folders
             Folders = new ObservableCollection<FolderModel>();
 
             FetchCommand = new DelegateCommand<FolderModel>(
-                f => _eventAggregator.GetEvent<FetchFolderEvent>().Publish(f),
+                f => 
+                    {
+                        SelectedFolder = f;
+                        _eventAggregator.GetEvent<FetchFolderEvent>().Publish(f);
+                    },
                 f => !_running);
 
             RebaseCommand = new DelegateCommand<FolderModel>(
-                f => _eventAggregator.GetEvent<RebaseFolderEvent>().Publish(f),
+                f =>  
+                    {
+                        SelectedFolder = f;
+                        _eventAggregator.GetEvent<RebaseFolderEvent>().Publish(f);
+                    },
                 f => !_running);
 
             CommitCommand = new DelegateCommand<FolderModel>(
-                f => _eventAggregator.GetEvent<CommitFolderEvent>().Publish(f),
+                f =>  
+                    {
+                        SelectedFolder = f;
+                        _eventAggregator.GetEvent<CommitFolderEvent>().Publish(f);
+                    },
                 f => !_running);
 
             GitExtensionsCommand = new DelegateCommand<FolderModel>(
-               f => _eventAggregator.GetEvent<GitExtentionsEvent>().Publish(f),
-               f => !_running);
+               f =>  
+                    {
+                        SelectedFolder = f;
+                        _eventAggregator.GetEvent<GitExtentionsEvent>().Publish(f);
+                    });
 
             _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj => UpdateCommands(true));
             _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj => UpdateCommands(false));
@@ -50,7 +65,7 @@ namespace GitSvnUpdateFolder.Views.Folders
             FetchCommand.RaiseCanExecuteChanged();
             RebaseCommand.RaiseCanExecuteChanged();
             CommitCommand.RaiseCanExecuteChanged();
-            GitExtensionsCommand.RaiseCanExecuteChanged();
+            //GitExtensionsCommand.RaiseCanExecuteChanged();
         }
 
         public IFoldersView View { get; set; }
