@@ -8,5 +8,7 @@ namespace GitSvnUpdateFolder.Views.Shell
     public interface IShellViewModel
     {
         IShellView View { get; set; }
+
+        double ProgressValue { get; set; }
     }
 }

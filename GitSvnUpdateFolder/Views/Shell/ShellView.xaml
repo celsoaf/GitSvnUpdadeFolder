@@ -5,6 +5,9 @@
         xmlns:local="clr-namespace:GitSvnUpdateFolder"
         Title="Git Svn Update Folder" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen" Icon="/GitSvnUpdateFolder;component/Resources/GitFolderIcon.png">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressValue="{Binding ProgressValue}" ProgressState="Normal"/>
+    </Window.TaskbarItemInfo>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
