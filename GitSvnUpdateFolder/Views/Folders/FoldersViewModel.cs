@@ -55,7 +55,7 @@ namespace GitSvnUpdateFolder.Views.Folders
                    _eventAggregator.GetEvent<GitExtentionsEvent>().Publish(f);
                });
 
-            GitExtensionsCommand = new DelegateCommand<FolderModel>(
+            BrowseCommand = new DelegateCommand<FolderModel>(
                f =>
                {
                    SelectedFolder = f;

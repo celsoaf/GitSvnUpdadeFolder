@@ -54,7 +54,7 @@
                                        Height="16" Width="16"/>
                         </Button>
                         <Button Grid.Column="5" Margin="2" ToolTip="Open folder"
-                                Command="{Binding Path=DataContext.GitExtensionsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                Command="{Binding Path=DataContext.BrowseCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                                 CommandParameter="{Binding}"
                                 FontSize="14" FontWeight="Bold">
                             <Image Source="/GitSvnUpdateFolder;component/Resources/Folder.png" 
