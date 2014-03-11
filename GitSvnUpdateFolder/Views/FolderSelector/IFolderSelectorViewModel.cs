@@ -16,5 +16,6 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
         DelegateCommand FetchAllCommand { get; set; }
         DelegateCommand RebaseAllCommand { get; set; }
         DelegateCommand CommitAllCommand { get; set; }
+        DelegateCommand BrowseCommand { get; set; }
     }
 }

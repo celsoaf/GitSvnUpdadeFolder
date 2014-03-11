@@ -90,6 +90,7 @@
     <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Enums\FolderState.cs" />
     <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Events\BrowseEvent.cs" />
     <Compile Include="Events\CommitAllEvent.cs" />
     <Compile Include="Events\CommitFolderEvent.cs" />
     <Compile Include="Events\FolderItemSelectedEvent.cs" />
@@ -249,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\git-extensions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

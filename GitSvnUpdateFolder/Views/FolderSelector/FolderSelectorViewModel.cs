@@ -43,6 +43,9 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
                 () => _eventAggregator.GetEvent<CommitAllEvent>().Publish(null),
                 () => !_running);
 
+            BrowseCommand = new DelegateCommand(
+                () => _eventAggregator.GetEvent<BrowseEvent>().Publish(FolderPath));
+
             _eventAggregator.GetEvent<ProcessStartEvent>().Subscribe(obj => UpdateCommands(true));
             _eventAggregator.GetEvent<ProcessEndEvent>().Subscribe(obj => UpdateCommands(false));
         }
@@ -77,5 +80,6 @@ namespace GitSvnUpdateFolder.Views.FolderSelector
         public DelegateCommand FetchAllCommand { get; set; }
         public DelegateCommand RebaseAllCommand { get; set; }
         public DelegateCommand CommitAllCommand { get; set; }
+        public DelegateCommand BrowseCommand { get; set; }
     }
 }

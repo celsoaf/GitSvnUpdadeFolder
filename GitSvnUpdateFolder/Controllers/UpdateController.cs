@@ -122,6 +122,10 @@ namespace GitSvnUpdateFolder.Controllers
             {
                 RunGitExtensions(f);
             });
+            _eventAggregator.GetEvent<BrowseEvent>().Subscribe(path =>
+            {
+                OpenFolder(path);
+            });
         }
 
         private void FolderSelected(string path)
@@ -194,6 +198,21 @@ namespace GitSvnUpdateFolder.Controllers
             p.StartInfo = new ProcessStartInfo(
                 @"C:\Program Files (x86)\GitExtensions\GitExtensions.exe", 
                 "browse " + folder.FullPath)
+            {
+                UseShellExecute = false,
+                //RedirectStandardOutput = true,
+                //RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            p.Start();
+        }
+
+        private void OpenFolder(string path)
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(
+                "explorer", path)
             {
                 UseShellExecute = false,
                 //RedirectStandardOutput = true,
