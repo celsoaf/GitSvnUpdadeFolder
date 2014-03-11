@@ -273,7 +273,7 @@ namespace GitSvnUpdateFolder.Controllers
 
             if (p.ExitCode != 0 || folder.Output.Any(m => m.Type == Enums.MessageType.Error))
                 folder.State = Enums.FolderState.Error;
-            else if (folder.Output.Count > 0 && folder.Output.First().Message.Contains("is up to date."))
+            else if (folder.Output.Count > 0 && !folder.Output.First().Message.Contains("is up to date."))
                 folder.State = Enums.FolderState.Info;
             else
                 folder.State = Enums.FolderState.Updated;
