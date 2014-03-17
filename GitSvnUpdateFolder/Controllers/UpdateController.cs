@@ -227,6 +227,8 @@ namespace GitSvnUpdateFolder.Controllers
         {
             folder.State = Enums.FolderState.Updating;
 
+            App.Current.Dispatcher.Invoke(new Action(() => folder.Output.Clear()));
+
             //git svn fetch
             Directory.SetCurrentDirectory(folder.FullPath);
 
