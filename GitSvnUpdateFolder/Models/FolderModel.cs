@@ -56,5 +56,19 @@ namespace GitSvnUpdateFolder.Models
 
         public ObservableCollection<MessageModel> Output { get; private set; }
         public ObservableCollection<string> Batches { get; private set; }
+
+        private volatile bool _Stoped = true;
+        public bool Stoped
+        {
+            get
+            {
+                return _Stoped;
+            }
+            set
+            {
+                _Stoped = value;
+                RaisePropertyChanged(() => Stoped);
+            }
+        }
     }
 }

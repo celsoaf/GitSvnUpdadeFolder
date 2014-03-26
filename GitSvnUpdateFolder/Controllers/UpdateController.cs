@@ -161,15 +161,25 @@ namespace GitSvnUpdateFolder.Controllers
 
                 var total = list.Count;
                 var i = 0d;
+                var taskList = new List<Task>();
                 foreach (var item in list)
                 {
-                    action(item);
+                    taskList.Add(Task.Factory.StartNew(() =>
+                    {
+                        action(item);
 
-                    var progress = (++i / total) * 100;
-                    _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
+                        App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                var progress = (++i / total) * 100;
+                                _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
+                            }));
+                    }));
                 }
 
-                _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+                Task.Factory.ContinueWhenAll(taskList.ToArray(), tl =>
+                    {
+                        _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+                    });
             });
         }
 
@@ -196,7 +206,7 @@ namespace GitSvnUpdateFolder.Controllers
         {
             var p = new Process();
             p.StartInfo = new ProcessStartInfo(
-                @"C:\Program Files (x86)\GitExtensions\GitExtensions.exe", 
+                @"C:\Program Files (x86)\GitExtensions\GitExtensions.exe",
                 "browse " + folder.FullPath)
             {
                 UseShellExecute = false,
@@ -225,6 +235,10 @@ namespace GitSvnUpdateFolder.Controllers
 
         private static void RunGit(FolderModel folder, string arguments)
         {
+            if (!folder.Stoped)
+                return;
+
+            folder.Stoped = false;
             folder.State = Enums.FolderState.Updating;
 
             App.Current.Dispatcher.Invoke(new Action(() => folder.Output.Clear()));
@@ -279,6 +293,8 @@ namespace GitSvnUpdateFolder.Controllers
                 folder.State = Enums.FolderState.Info;
             else
                 folder.State = Enums.FolderState.Updated;
+
+            folder.Stoped = true;
         }
     }
 }
