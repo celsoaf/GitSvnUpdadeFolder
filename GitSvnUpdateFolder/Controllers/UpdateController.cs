@@ -164,16 +164,16 @@ namespace GitSvnUpdateFolder.Controllers
                 var taskList = new List<Task>();
                 foreach (var item in list)
                 {
-                    taskList.Add(Task.Factory.StartNew(() =>
+                    taskList.Add(Task.Factory.StartNew(curr =>
                     {
-                        action(item);
+                        action(curr as FolderModel);
 
                         App.Current.Dispatcher.BeginInvoke(new Action(() =>
                             {
                                 var progress = (++i / total) * 100;
                                 _eventAggregator.GetEvent<ProcessProgressEvent>().Publish(progress);
                             }));
-                    }));
+                    }, item));
                 }
 
                 Task.Factory.ContinueWhenAll(taskList.ToArray(), tl =>
@@ -244,7 +244,7 @@ namespace GitSvnUpdateFolder.Controllers
             App.Current.Dispatcher.Invoke(new Action(() => folder.Output.Clear()));
 
             //git svn fetch
-            Directory.SetCurrentDirectory(folder.FullPath);
+            //Directory.SetCurrentDirectory(folder.FullPath);
 
             var p = new Process();
             p.StartInfo = new ProcessStartInfo("git", arguments)
@@ -252,7 +252,8 @@ namespace GitSvnUpdateFolder.Controllers
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = folder.FullPath
             };
 
             p.OutputDataReceived += (s, e) =>
