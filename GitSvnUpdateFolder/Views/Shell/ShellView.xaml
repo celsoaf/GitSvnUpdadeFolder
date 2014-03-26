@@ -6,7 +6,24 @@
         Title="Git Svn Update Folder" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen" Icon="/GitSvnUpdateFolder;component/Resources/GitFolderIcon.png">
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressValue="{Binding ProgressValue}" ProgressState="Normal"/>
+        <TaskbarItemInfo ProgressValue="{Binding ProgressValue}" ProgressState="Normal">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfoCollection>
+                    <ThumbButtonInfo Command="{Binding FetchAllCommand}" DismissWhenClicked="False"
+                                     Description="Fetch All"
+                                     ImageSource="/GitSvnUpdateFolder;component/Resources/PullAll.png"/>
+                    <ThumbButtonInfo Command="{Binding RebaseAllCommand}" DismissWhenClicked="False"
+                                     Description="Rebase All"
+                                     ImageSource="/GitSvnUpdateFolder;component/Resources/PullRebase.png"/>
+                    <ThumbButtonInfo Command="{Binding CommitAllCommand}" DismissWhenClicked="False"
+                                     Description="Commit All"
+                                     ImageSource="/GitSvnUpdateFolder;component/Resources/PushAll.png"/>
+                    <ThumbButtonInfo Command="{Binding BrowseCommand}" DismissWhenClicked="False"
+                                     Description="Browse"
+                                     ImageSource="/GitSvnUpdateFolder;component/Resources/Folder.png"/>
+                </ThumbButtonInfoCollection>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
     <Grid>
         <Grid.RowDefinitions>
