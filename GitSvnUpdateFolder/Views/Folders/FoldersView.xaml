@@ -11,7 +11,7 @@
         <my:StateToColorConverter x:Key="ColorConverter1" />
     </UserControl.Resources>
     <GroupBox Header="Folders" Margin="5">
-        <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
+        <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch" Background="{Binding State, Converter={StaticResource ColorConverter1}}">
