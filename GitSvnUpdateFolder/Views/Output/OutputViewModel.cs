@@ -20,6 +20,7 @@ namespace GitSvnUpdateFolder.Views.Output
             eventAggregator.GetEvent<FolderItemSelectedEvent>().Subscribe(f =>
             {
                 Output = f != null ? f.Output : null;
+                Header = f != null ? f.Name : null;
             });
         }
 
@@ -36,6 +37,20 @@ namespace GitSvnUpdateFolder.Views.Output
             {
                 _Output = value;
                 RaisePropertyChanged(() => Output);
+            }
+        }
+
+        private string _Header;
+        public string Header
+        {
+            get
+            {
+                return _Header;
+            }
+            set
+            {
+                _Header = value;
+                RaisePropertyChanged(() => Header);
             }
         }
     }

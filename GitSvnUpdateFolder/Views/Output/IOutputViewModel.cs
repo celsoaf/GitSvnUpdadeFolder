@@ -12,5 +12,7 @@ namespace GitSvnUpdateFolder.Views.Output
         IOutputView View { get; set; }
 
         ObservableCollection<MessageModel> Output { get; set; }
+
+        string Header { get; set; }
     }
 }

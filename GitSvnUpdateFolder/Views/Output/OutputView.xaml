@@ -9,7 +9,10 @@
     <UserControl.Resources>
         <Converters:ColorConverter x:Key="ColorConverter"/>
     </UserControl.Resources>
-    <GroupBox Header="Output" Margin="5">
+    <GroupBox Margin="5">
+        <GroupBox.Header>
+            <TextBlock Text="{Binding Header, StringFormat={}Output {0}}" FontSize="14" FontWeight="Bold"/>
+        </GroupBox.Header>
         <ListBox ItemsSource="{Binding Output}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
