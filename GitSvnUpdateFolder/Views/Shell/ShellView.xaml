@@ -52,8 +52,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ContentControl Grid.Row="0"
-                                cal:RegionManager.RegionName="{x:Static local:RegionNames.RightTopRegion}"/>
+            <!--<ContentControl Grid.Row="0"
+                                cal:RegionManager.RegionName="{x:Static local:RegionNames.RightTopRegion}"/>-->
             <ContentControl Grid.Row="1"
                                 cal:RegionManager.RegionName="{x:Static local:RegionNames.RightBottomRegion}"/>
         </Grid>        
