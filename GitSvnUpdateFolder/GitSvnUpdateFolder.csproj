@@ -124,7 +124,8 @@
     <Compile Include="Views\FolderSelector\FolderSelectorViewModel.cs" />
     <Compile Include="Views\FolderSelector\IFolderSelectorView.cs" />
     <Compile Include="Views\FolderSelector\IFolderSelectorViewModel.cs" />
-    <Compile Include="Views\Folders\Converters\ImageConverter.cs" />
+    <Compile Include="Views\Folders\Converters\StateToImageConverter.cs" />
+    <Compile Include="Views\Folders\Converters\StateToColorConverter.cs" />
     <Compile Include="Views\Folders\FoldersView.xaml.cs">
       <DependentUpon>FoldersView.xaml</DependentUpon>
     </Compile>

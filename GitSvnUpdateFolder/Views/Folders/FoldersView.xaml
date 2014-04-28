@@ -7,13 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" xmlns:my="clr-namespace:GitSvnUpdateFolder.Views.Folders.Converters">
     <UserControl.Resources>
-        <my:ImageConverter x:Key="ImageConverter1" />
+        <my:StateToImageConverter x:Key="ImageConverter1" />
+        <my:StateToColorConverter x:Key="ColorConverter1" />
     </UserControl.Resources>
     <GroupBox Header="Folders" Margin="5">
         <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch" Background="{Binding State, Converter={StaticResource ColorConverter1}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
