@@ -12,7 +12,7 @@
         <my:ChangesCountToColorConverter x:Key="ChangesCountConverter1" />
     </UserControl.Resources>
     <GroupBox Header="Folders" Margin="5">
-        <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
+        <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}" HorizontalContentAlignment="Stretch" MinWidth="400">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch" Background="{Binding State, Converter={StaticResource ColorConverter1}}">
