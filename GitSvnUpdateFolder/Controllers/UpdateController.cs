@@ -15,6 +15,7 @@ using GitSvnUpdateFolder.Models;
 using GitSvnUpdateFolder.Views.Output;
 using GitSvnUpdateFolder.Views.Progress;
 using GitSvnUpdateFolder.Views.Batches;
+using System.Threading;
 
 namespace GitSvnUpdateFolder.Controllers
 {
@@ -130,6 +131,8 @@ namespace GitSvnUpdateFolder.Controllers
 
         private void FolderSelected(string path)
         {
+            _refreshRunning = false;
+
             _eventAggregator.GetEvent<ProcessStartEvent>().Publish(null);
 
             _folder.Folders.Clear();
@@ -147,7 +150,35 @@ namespace GitSvnUpdateFolder.Controllers
                     }
 
                     _eventAggregator.GetEvent<ProcessEndEvent>().Publish(null);
+
+                    StartRefresh();
                 });
+        }
+
+        private volatile bool _refreshRunning = false;
+        private void StartRefresh()
+        {
+            if (!_refreshRunning)
+            {
+                _refreshRunning = true;
+
+                Task.Factory.StartNew(() =>
+                {
+                    while (_refreshRunning)
+                    {
+                        _folder.Folders.ToList().ForEach(f =>
+                        {
+                            if (!_refreshRunning)
+                                return;
+
+                            f.Refresh();
+                        });
+
+                        if (_refreshRunning)
+                            Thread.Sleep(TimeSpan.FromMinutes(1));
+                    }
+                });
+            }
         }
 
         private void RunAll(Action<FolderModel> action)

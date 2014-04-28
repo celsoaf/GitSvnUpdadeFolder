@@ -7,6 +7,8 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using GitUIPluginInterfaces;
+using GitCommands;
 
 namespace GitSvnUpdateFolder.Models
 {
@@ -21,6 +23,10 @@ namespace GitSvnUpdateFolder.Models
             Batches = new ObservableCollection<string>();
 
             State = FolderState.Outdated;
+
+            GitModule = new GitModule(path);
+
+            //Refresh();
 
             //State = FolderState.Initializing;
             //Task.Factory.StartNew(() =>
@@ -68,6 +74,38 @@ namespace GitSvnUpdateFolder.Models
             {
                 _Stoped = value;
                 RaisePropertyChanged(() => Stoped);
+            }
+        }
+
+        private int _ChangedCount;
+        public int ChangedCount
+        {
+            get
+            {
+                return _ChangedCount;
+            }
+            set
+            {
+                _ChangedCount = value;
+                RaisePropertyChanged(() => ChangedCount);
+            }
+        }
+
+        public GitModule GitModule { get; set; }
+
+        public void Refresh()
+        {
+            if (GitModule.IsValidGitWorkingDir())
+            {
+                var command = GitCommandHelpers.GetAllChangedFilesCmd(true, UntrackedFilesMode.Default);
+                var updatedStatus = GitModule.RunGit(command);
+
+                var allChangedFiles = GitCommandHelpers.GetAllChangedFilesFromString(GitModule, updatedStatus);
+                var stagedCount = allChangedFiles.Count(status => status.IsStaged);
+                var unstagedCount = allChangedFiles.Count - stagedCount;
+                var unstagedSubmodulesCount = allChangedFiles.Count(status => status.IsSubmodule && !status.IsStaged);
+
+                ChangedCount = allChangedFiles.Count;
             }
         }
     }
