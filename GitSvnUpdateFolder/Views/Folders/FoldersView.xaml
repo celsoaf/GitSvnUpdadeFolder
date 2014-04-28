@@ -9,6 +9,7 @@
     <UserControl.Resources>
         <my:StateToImageConverter x:Key="ImageConverter1" />
         <my:StateToColorConverter x:Key="ColorConverter1" />
+        <my:ChangesCountToColorConverter x:Key="ChangesCountConverter1" />
     </UserControl.Resources>
     <GroupBox Header="Folders" Margin="5">
         <ListBox ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
@@ -29,8 +30,15 @@
                         <Image Grid.Column="0" VerticalAlignment="Center"
                             Source="{Binding State, Converter={StaticResource ImageConverter1}}" 
                                Width="16" Height="16" Margin="3"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Bold"
-                                   VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" FontWeight="Bold"
+                                   VerticalAlignment="Center" Foreground="{Binding ChangedCount, Converter={StaticResource ChangesCountConverter1}}">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}({1})">
+                                    <Binding Path="Name"/>
+                                    <Binding Path="ChangedCount" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         
                         <Button Grid.Column="2" Margin="2" ToolTip="Fetch"
                                 Command="{Binding Path=DataContext.FetchCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
