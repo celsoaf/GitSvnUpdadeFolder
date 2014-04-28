@@ -91,6 +91,20 @@ namespace GitSvnUpdateFolder.Models
             }
         }
 
+        private int _PendingCommits;
+        public int PendingCommits
+        {
+            get
+            {
+                return _PendingCommits;
+            }
+            set
+            {
+                _PendingCommits = value;
+                RaisePropertyChanged(() => PendingCommits);
+            }
+        }
+
         public GitModule GitModule { get; set; }
 
         public void Refresh()
@@ -106,6 +120,11 @@ namespace GitSvnUpdateFolder.Models
                 var unstagedSubmodulesCount = allChangedFiles.Count(status => status.IsSubmodule && !status.IsStaged);
 
                 ChangedCount = allChangedFiles.Count;
+
+                var cmd = "log trunk..HEAD --graph --pretty=format:'%Cred%h%Creset' --abbrev-commit --date=relative";
+                var result = GitModule.RunGit(cmd);
+                var msgs = result.Split('*');
+                PendingCommits = msgs.Length - 1;
             }
         }
     }

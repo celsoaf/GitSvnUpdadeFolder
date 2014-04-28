@@ -33,9 +33,10 @@
                         <TextBlock Grid.Column="1" FontWeight="Bold"
                                    VerticalAlignment="Center" Foreground="{Binding ChangedCount, Converter={StaticResource ChangesCountConverter1}}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0}({1})">
+                                <MultiBinding StringFormat="{}{0}({1})({2})">
                                     <Binding Path="Name"/>
                                     <Binding Path="ChangedCount" />
+                                    <Binding Path="PendingCommits" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
