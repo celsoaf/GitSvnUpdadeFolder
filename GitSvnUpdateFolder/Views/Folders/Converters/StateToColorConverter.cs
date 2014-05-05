@@ -21,13 +21,13 @@ namespace GitSvnUpdateFolder.Views.Folders.Converters
                     case FolderState.Updated:
                         return Brushes.LightGreen;
                     case FolderState.Updating:
-                        return Brushes.LightBlue;
+                        return Brushes.LightGray;
                     case FolderState.Outdated:
                         break;
                     case FolderState.Error:
                         return Brushes.LightSalmon;
                     case FolderState.Info:
-                        return Brushes.LightGray;
+                        return Brushes.LightBlue;
                     case FolderState.Initializing:
                         break;
                     default:
