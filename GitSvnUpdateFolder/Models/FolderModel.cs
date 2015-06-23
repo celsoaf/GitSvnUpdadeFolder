@@ -112,7 +112,7 @@ namespace GitSvnUpdateFolder.Models
             if (GitModule.IsValidGitWorkingDir())
             {
                 var command = GitCommandHelpers.GetAllChangedFilesCmd(true, UntrackedFilesMode.Default);
-                var updatedStatus = GitModule.RunGit(command);
+                var updatedStatus = GitModule.RunGitCmd(command);
 
                 var allChangedFiles = GitCommandHelpers.GetAllChangedFilesFromString(GitModule, updatedStatus);
                 var stagedCount = allChangedFiles.Count(status => status.IsStaged);
@@ -122,7 +122,7 @@ namespace GitSvnUpdateFolder.Models
                 ChangedCount = allChangedFiles.Count;
 
                 var cmd = "log trunk..HEAD --graph --pretty=format:'%Cred%h%Creset' --abbrev-commit --date=relative";
-                var result = GitModule.RunGit(cmd);
+                var result = GitModule.RunGitCmd(cmd);
                 var msgs = result.Split('*');
                 PendingCommits = msgs.Length - 1;
             }

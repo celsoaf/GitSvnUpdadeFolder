@@ -278,7 +278,7 @@ namespace GitSvnUpdateFolder.Controllers
             //Directory.SetCurrentDirectory(folder.FullPath);
 
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo("git", arguments)
+            p.StartInfo = new ProcessStartInfo(@"C:\Program Files (x86)\Git\bin\git", arguments)
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
